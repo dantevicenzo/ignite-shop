@@ -20,6 +20,16 @@ export const {
       gray4: '#C4C4CC',
       gray5: '#E1E1E6',
       white: '#FFFFFF',
+      linearGradientGreenPurple:
+        'linear-gradient(180deg, rgba(30,164,131,1) 0%, rgba(116,101,212,1) 100%)',
+
+      transparentGray2: 'rgb(32, 32, 36, 0.9)',
+    },
+    fontSizes: {
+      sm: '1.125rem',
+      md: '1.25rem',
+      lg: '1.5rem',
+      xl: '2rem',
     },
   },
 })
