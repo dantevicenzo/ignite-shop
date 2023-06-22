@@ -7,71 +7,18 @@ import {
   Container,
 } from '@/styles/pages/home'
 import { Handbag } from '@phosphor-icons/react'
-import { KeenSliderPlugin, useKeenSlider } from 'keen-slider/react'
+import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
 
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
 import { GetStaticProps } from 'next'
+import { useWheelControls } from '@/hooks/useWheelControls'
+import Image from 'next/image'
+import Link from 'next/link'
+import { formatPriceInCents } from '@/lib/formatter'
 
-const WheelControls: KeenSliderPlugin = (slider) => {
-  let touchTimeout: ReturnType<typeof setTimeout>
-  let position: {
-    x: number
-    y: number
-  }
-  let wheelActive: boolean
-
-  function dispatch(e: WheelEvent, name: string) {
-    position.x -= e.deltaY
-    slider.container.dispatchEvent(
-      new CustomEvent(name, {
-        detail: {
-          x: position.x,
-          y: position.y,
-        },
-      }),
-    )
-  }
-
-  function wheelStart(e: WheelEvent) {
-    position = {
-      x: e.pageX,
-      y: e.pageY,
-    }
-    dispatch(e, 'ksDragStart')
-  }
-
-  function wheel(e: WheelEvent) {
-    dispatch(e, 'ksDrag')
-  }
-
-  function wheelEnd(e: WheelEvent) {
-    dispatch(e, 'ksDragEnd')
-  }
-
-  function eventWheel(e: WheelEvent) {
-    e.preventDefault()
-    if (!wheelActive) {
-      wheelStart(e)
-      wheelActive = true
-    }
-    wheel(e)
-    clearTimeout(touchTimeout)
-    touchTimeout = setTimeout(() => {
-      wheelActive = false
-      wheelEnd(e)
-    }, 50)
-  }
-
-  slider.on('created', () => {
-    slider.container.addEventListener('wheel', eventWheel, {
-      passive: false,
-    })
-  })
-}
-
-interface IProduct {
+export interface IProduct {
   id: string
   name: string
   price: number
@@ -84,6 +31,7 @@ interface IHomeProps {
 }
 
 export default function Home(props: IHomeProps) {
+  const WheelControls = useWheelControls()
   const [ref] = useKeenSlider<HTMLDivElement>(
     {
       loop: false,
@@ -99,18 +47,20 @@ export default function Home(props: IHomeProps) {
   return (
     <Container ref={ref} className="keen-slider">
       {props.products.map((product) => (
-        <Card key={product.id} className="keen-slider__slide">
-          <img src={product.imageUrl} width={520} height={480} alt="" />
-          <CardDetails>
-            <div>
-              <CartTitle>{product.name}</CartTitle>
-              <CartPrice>{product.price}</CartPrice>
-            </div>
-            <AddToCartButton type="button">
-              <Handbag size={32} />
-            </AddToCartButton>
-          </CardDetails>
-        </Card>
+        <Link key={product.id} href={`/product/${product.id}`}>
+          <Card className="keen-slider__slide">
+            <Image src={product.imageUrl} width={520} height={480} alt="" />
+            <CardDetails>
+              <div>
+                <CartTitle>{product.name}</CartTitle>
+                <CartPrice>{product.price}</CartPrice>
+              </div>
+              <AddToCartButton type="button">
+                <Handbag size={32} />
+              </AddToCartButton>
+            </CardDetails>
+          </Card>
+        </Link>
       ))}
     </Container>
   )
@@ -128,10 +78,7 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       id: product.id,
       name: product.name,
-      price: new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format(priceInCents / 100),
+      price: formatPriceInCents(priceInCents),
       description: product.description,
       imageUrl: product.images[0],
     }
