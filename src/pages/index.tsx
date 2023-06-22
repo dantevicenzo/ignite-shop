@@ -6,7 +6,6 @@ import {
   CartTitle,
   Container,
 } from '@/styles/pages/home'
-import Image from 'next/image'
 import { Handbag } from '@phosphor-icons/react'
 import { KeenSliderPlugin, useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
@@ -101,7 +100,7 @@ export default function Home(props: IHomeProps) {
     <Container ref={ref} className="keen-slider">
       {props.products.map((product) => (
         <Card key={product.id} className="keen-slider__slide">
-          <Image src={product.imageUrl} width={520} height={480} alt="" />
+          <img src={product.imageUrl} width={520} height={480} alt="" />
           <CardDetails>
             <div>
               <CartTitle>{product.name}</CartTitle>
