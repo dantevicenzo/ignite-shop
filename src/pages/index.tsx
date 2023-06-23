@@ -21,7 +21,7 @@ import { formatPriceInCents } from '@/lib/formatter'
 export interface IProduct {
   id: string
   name: string
-  price: number
+  price: string
   description: string
   imageUrl: string
 }

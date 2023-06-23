@@ -8,17 +8,24 @@ import {
   Title,
 } from '@/styles/pages/product'
 import Image from 'next/image'
-import { GetServerSideProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
 import { IProduct } from '..'
 import { formatPriceInCents } from '@/lib/formatter'
+import { useRouter } from 'next/router'
 
 interface IProductProps {
   product: IProduct
 }
 
 export default function Product({ product }: IProductProps) {
+  const { isFallback } = useRouter()
+
+  if (isFallback) {
+    return <p>Carregando...</p>
+  }
+
   return (
     <Container>
       <ImageContainer>
@@ -33,9 +40,29 @@ export default function Product({ product }: IProductProps) {
     </Container>
   )
 }
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await stripe.products.list({
+    expand: ['data.default_price'],
+  })
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const res = await stripe.products.retrieve(query.id as string, {
+  const products = res.data.map((product) => {
+    return {
+      params: {
+        id: product.id,
+      },
+    }
+  })
+
+  return {
+    paths: products,
+    fallback: true, // false or "blocking"
+  }
+}
+
+export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
+  params,
+}) => {
+  const res = await stripe.products.retrieve(params?.id as string, {
     expand: ['default_price'],
   })
 
@@ -53,6 +80,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
       product,
+      revalidate: 60 * 60 * 2, // 2 hours
     },
   }
 }

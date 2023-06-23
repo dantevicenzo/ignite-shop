@@ -30,16 +30,19 @@ export const Title = styled('h1', {
   fontSize: '$xl',
   color: '$gray4',
 })
+
 export const Price = styled('span', {
   fontSize: '$xl',
   color: '$greenLight',
   marginTop: '1rem',
 })
+
 export const Description = styled('p', {
   fontSize: '$sm',
   color: '$gray4',
   marginTop: '2.5rem',
 })
+
 export const AddToBagButton = styled('button', {
   marginTop: 'auto',
   fontSize: '$sm',
