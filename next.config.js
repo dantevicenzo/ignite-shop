@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     domains: ['files.stripe.com'],
     loader: 'custom',
-    loaderFile: './my/image/loader.js',
+    loaderFile: './loader.js',
   },
 }
 
