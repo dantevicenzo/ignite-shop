@@ -14,6 +14,7 @@ import Stripe from 'stripe'
 import { IProduct } from '..'
 import { formatPriceInCents } from '@/lib/formatter'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 interface IProductProps {
   product: IProduct
@@ -27,17 +28,23 @@ export default function Product({ product }: IProductProps) {
   }
 
   return (
-    <Container>
-      <ImageContainer>
-        <Image src={product.imageUrl} width={520} height={480} alt="" />
-      </ImageContainer>
-      <DetailsContainer>
-        <Title>{product.name}</Title>
-        <Price>{product.price}</Price>
-        <Description>{product.description}</Description>
-        <AddToBagButton>Colocar na sacola</AddToBagButton>
-      </DetailsContainer>
-    </Container>
+    <>
+      <Head>
+        <title>{product.name} | Ignite Shop</title>
+      </Head>
+
+      <Container>
+        <ImageContainer>
+          <Image src={product.imageUrl} width={520} height={480} alt="" />
+        </ImageContainer>
+        <DetailsContainer>
+          <Title>{product.name}</Title>
+          <Price>{product.price}</Price>
+          <Description>{product.description}</Description>
+          <AddToBagButton>Colocar na sacola</AddToBagButton>
+        </DetailsContainer>
+      </Container>
+    </>
   )
 }
 export const getStaticPaths: GetStaticPaths = async () => {

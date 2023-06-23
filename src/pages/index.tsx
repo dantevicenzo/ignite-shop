@@ -17,6 +17,7 @@ import { useWheelControls } from '@/hooks/useWheelControls'
 import Image from 'next/image'
 import Link from 'next/link'
 import { formatPriceInCents } from '@/lib/formatter'
+import Head from 'next/head'
 
 export interface IProduct {
   id: string
@@ -45,24 +46,30 @@ export default function Home(props: IHomeProps) {
   )
 
   return (
-    <Container ref={ref} className="keen-slider">
-      {props.products.map((product) => (
-        <Link key={product.id} href={`/product/${product.id}`}>
-          <Card className="keen-slider__slide">
-            <Image src={product.imageUrl} width={520} height={480} alt="" />
-            <CardDetails>
-              <div>
-                <CartTitle>{product.name}</CartTitle>
-                <CartPrice>{product.price}</CartPrice>
-              </div>
-              <AddToCartButton type="button">
-                <Handbag size={32} />
-              </AddToCartButton>
-            </CardDetails>
-          </Card>
-        </Link>
-      ))}
-    </Container>
+    <>
+      <Head>
+        <title>Home | Ignite Shop</title>
+      </Head>
+
+      <Container ref={ref} className="keen-slider">
+        {props.products.map((product) => (
+          <Link key={product.id} href={`/product/${product.id}`}>
+            <Card className="keen-slider__slide">
+              <Image src={product.imageUrl} width={520} height={480} alt="" />
+              <CardDetails>
+                <div>
+                  <CartTitle>{product.name}</CartTitle>
+                  <CartPrice>{product.price}</CartPrice>
+                </div>
+                <AddToCartButton type="button">
+                  <Handbag size={32} />
+                </AddToCartButton>
+              </CardDetails>
+            </Card>
+          </Link>
+        ))}
+      </Container>
+    </>
   )
 }
 
