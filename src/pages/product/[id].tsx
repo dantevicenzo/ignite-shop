@@ -15,8 +15,6 @@ import { IProduct } from '..'
 import { formatPriceInCents } from '@/lib/formatter'
 import { useRouter } from 'next/router'
 
-export const runtime = 'experimental-edge'
-
 interface IProductProps {
   product: IProduct
 }
