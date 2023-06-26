@@ -8,7 +8,6 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 
-import camiseta from '@/assets/camisetas/camiseta2.png'
 import { GetServerSideProps } from 'next'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
