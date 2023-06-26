@@ -15,6 +15,8 @@ import { IProduct } from '..'
 import { formatPriceInCents } from '@/lib/formatter'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import axios from 'axios'
+import { useState } from 'react'
 
 interface IProductProps {
   product: IProduct
@@ -22,15 +24,35 @@ interface IProductProps {
 
 export default function Product({ product }: IProductProps) {
   const { isFallback } = useRouter()
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
 
   if (isFallback) {
     return <p>Carregando...</p>
   }
 
+  async function handleAddToBag() {
+    try {
+      setIsCreatingCheckoutSession(true)
+
+      const response = await axios.post('/api/checkout', {
+        priceId: product.defaultPriceId,
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (error) {
+      setIsCreatingCheckoutSession(false)
+
+      alert(`Falha ao redirecionar ao checkout. ${error}`)
+    }
+  }
+
   return (
     <>
       <Head>
-        <title>{product.name} | Ignite Shop</title>
+        <title>{`${product.name} | Ignite Shop`}</title>
       </Head>
 
       <Container>
@@ -41,7 +63,12 @@ export default function Product({ product }: IProductProps) {
           <Title>{product.name}</Title>
           <Price>{product.price}</Price>
           <Description>{product.description}</Description>
-          <AddToBagButton>Colocar na sacola</AddToBagButton>
+          <AddToBagButton
+            onClick={handleAddToBag}
+            disabled={isCreatingCheckoutSession}
+          >
+            Colocar na sacola
+          </AddToBagButton>
         </DetailsContainer>
       </Container>
     </>
@@ -80,6 +107,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
     id: res.id,
     name: res.name,
     price: formatPriceInCents(priceInCents),
+    defaultPriceId: stripePrice.id,
     description: res.description,
     imageUrl: res.images[0],
   }

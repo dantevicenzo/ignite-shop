@@ -23,6 +23,7 @@ export interface IProduct {
   id: string
   name: string
   price: string
+  defaultPriceId: string
   description: string
   imageUrl: string
 }
@@ -53,7 +54,12 @@ export default function Home(props: IHomeProps) {
 
       <Container ref={ref} className="keen-slider">
         {props.products.map((product) => (
-          <Link key={product.id} href={`/product/${product.id}`}>
+          <Link
+            key={product.id}
+            href={`/product/${product.id}`}
+            passHref
+            legacyBehavior
+          >
             <Card className="keen-slider__slide">
               <Image src={product.imageUrl} width={520} height={480} alt="" />
               <CardDetails>
@@ -86,6 +92,7 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       price: formatPriceInCents(priceInCents),
+      defaultPriceId: stripePrice.id,
       description: product.description,
       imageUrl: product.images[0],
     }
