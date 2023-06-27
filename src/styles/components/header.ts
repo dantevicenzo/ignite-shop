@@ -30,10 +30,42 @@ export const CartButton = styled('button', {
   width: '3rem',
   height: '3rem',
   backgroundColor: '$gray2',
+
   color: '$gray3',
+
+  position: 'relative',
 
   '&:hover': {
     cursor: 'pointer',
     opacity: 0.8,
   },
+})
+
+export const CartCount = styled('div', {
+  variants: {
+    cartState: {
+      full: { display: 'flex' },
+      empty: { display: 'none' },
+    },
+  },
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  width: '1.5rem',
+  height: '1.5rem',
+  backgroundColor: '$greenPrimary',
+  borderRadius: '50%',
+
+  fontSize: '$xsm',
+  fontWeight: 'bold',
+  color: '$white',
+
+  outline: '3px solid $gray1',
+
+  position: 'absolute',
+
+  top: 0,
+  right: 0,
+
+  transform: 'translate(30%, -30%)',
 })

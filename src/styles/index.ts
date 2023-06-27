@@ -26,6 +26,8 @@ export const {
       transparentGray2: 'rgb(32, 32, 36, 0.9)',
     },
     fontSizes: {
+      xsm: '0.875rem',
+      root: '1rem',
       sm: '1.125rem',
       md: '1.25rem',
       lg: '1.5rem',

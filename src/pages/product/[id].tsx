@@ -1,9 +1,7 @@
-import axios from 'axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import Head from 'next/head'
-import { useState } from 'react'
 import Stripe from 'stripe'
 
 import { stripe } from '@/lib/stripe'
@@ -21,6 +19,7 @@ import {
 
 import { IProduct } from '..'
 import { Header } from '@/components/Header'
+import { useShoppingCart } from 'use-shopping-cart'
 
 interface IProductProps {
   product: IProduct
@@ -28,29 +27,22 @@ interface IProductProps {
 
 export default function Product({ product }: IProductProps) {
   const { isFallback } = useRouter()
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false)
+
+  const { addItem } = useShoppingCart()
 
   if (isFallback) {
     return <p>Carregando...</p>
   }
 
-  async function handleAddToBag() {
-    try {
-      setIsCreatingCheckoutSession(true)
-
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
-
-      const { checkoutUrl } = response.data
-
-      window.location.href = checkoutUrl
-    } catch (error) {
-      setIsCreatingCheckoutSession(false)
-
-      alert(`Falha ao redirecionar ao checkout. ${error}`)
-    }
+  function handleAddToBag() {
+    addItem({
+      name: product.name,
+      description: product.description as string,
+      id: product.priceId,
+      price: product.price,
+      currency: product.currency,
+      image: product.image,
+    })
   }
 
   return (
@@ -63,16 +55,13 @@ export default function Product({ product }: IProductProps) {
 
       <Container>
         <ImageContainer>
-          <Image src={product.imageUrl} width={520} height={480} alt="" />
+          <Image src={product.image} width={520} height={480} alt="" />
         </ImageContainer>
         <DetailsContainer>
           <Title>{product.name}</Title>
-          <Price>{product.price}</Price>
+          <Price>{product.formattedPrice}</Price>
           <Description>{product.description}</Description>
-          <AddToBagButton
-            onClick={handleAddToBag}
-            disabled={isCreatingCheckoutSession}
-          >
+          <AddToBagButton onClick={handleAddToBag}>
             Colocar na sacola
           </AddToBagButton>
         </DetailsContainer>
@@ -109,13 +98,15 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
   const stripePrice = res.default_price as Stripe.Price
   const priceInCents = stripePrice.unit_amount as number
 
-  const product = {
+  const product: IProduct = {
     id: res.id,
     name: res.name,
-    price: formatPriceInCents(priceInCents),
-    defaultPriceId: stripePrice.id,
+    price: priceInCents,
+    currency: 'BRL',
+    formattedPrice: formatPriceInCents(priceInCents),
+    priceId: stripePrice.id,
     description: res.description,
-    imageUrl: res.images[0],
+    image: res.images[0],
   }
 
   return {

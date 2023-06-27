@@ -19,14 +19,17 @@ import Link from 'next/link'
 import { formatPriceInCents } from '@/lib/formatter'
 import Head from 'next/head'
 import { Header } from '@/components/Header'
+import { useShoppingCart } from 'use-shopping-cart'
 
 export interface IProduct {
   id: string
   name: string
-  price: string
-  defaultPriceId: string
-  description: string
-  imageUrl: string
+  price: number
+  priceId: string
+  formattedPrice: string
+  currency: string
+  description: string | null
+  image: string
 }
 
 interface IHomeProps {
@@ -46,6 +49,18 @@ export default function Home(props: IHomeProps) {
     },
     [WheelControls],
   )
+  const { addItem } = useShoppingCart()
+
+  function handleAddToBag(product: IProduct) {
+    addItem({
+      name: product.name,
+      description: product.description as string,
+      id: product.priceId,
+      price: product.price,
+      currency: product.currency,
+      image: product.image,
+    })
+  }
 
   return (
     <>
@@ -57,25 +72,23 @@ export default function Home(props: IHomeProps) {
 
       <Container ref={ref} className="keen-slider">
         {props.products.map((product) => (
-          <Link
-            key={product.id}
-            href={`/product/${product.id}`}
-            passHref
-            legacyBehavior
-          >
-            <Card className="keen-slider__slide">
-              <Image src={product.imageUrl} width={520} height={480} alt="" />
-              <CardDetails>
-                <div>
-                  <CartTitle>{product.name}</CartTitle>
-                  <CartPrice>{product.price}</CartPrice>
-                </div>
-                <AddToCartButton type="button">
-                  <Handbag size={32} />
-                </AddToCartButton>
-              </CardDetails>
-            </Card>
-          </Link>
+          <Card className="keen-slider__slide" key={product.id}>
+            <Link href={`/product/${product.id}`} passHref legacyBehavior>
+              <Image src={product.image} width={520} height={480} alt="" />
+            </Link>
+            <CardDetails>
+              <div>
+                <CartTitle>{product.name}</CartTitle>
+                <CartPrice>{product.formattedPrice}</CartPrice>
+              </div>
+              <AddToCartButton
+                type="button"
+                onClick={() => handleAddToBag(product)}
+              >
+                <Handbag size={32} />
+              </AddToCartButton>
+            </CardDetails>
+          </Card>
         ))}
       </Container>
     </>
@@ -94,11 +107,13 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       id: product.id,
       name: product.name,
-      price: formatPriceInCents(priceInCents),
-      defaultPriceId: stripePrice.id,
+      formattedPrice: formatPriceInCents(priceInCents),
+      priceId: stripePrice.id,
+      price: priceInCents,
+      currency: 'BRL',
       description: product.description,
-      imageUrl: product.images[0],
-    }
+      image: product.images[0],
+    } as IProduct
   })
 
   return {

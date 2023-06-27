@@ -14,6 +14,8 @@ import Stripe from 'stripe'
 import Head from 'next/head'
 import { Header } from '@/components/Header'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useShoppingCart } from 'use-shopping-cart'
 
 interface ISuccessProps {
   customerName: string
@@ -32,6 +34,12 @@ export default function Success({
   totalPurchasedItemsQuantity,
 }: ISuccessProps) {
   const { isFallback } = useRouter()
+  const { clearCart } = useShoppingCart()
+
+  useEffect(() => {
+    clearCart()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (isFallback) {
     return <p>Carregando...</p>

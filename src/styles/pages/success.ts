@@ -23,6 +23,7 @@ export const Container = styled('div', {
 export const ImageGroupContainer = styled('div', {
   display: 'flex',
   marginTop: '6.5rem',
+  gap: '0.5rem',
 })
 
 export const ImageContainer = styled('div', {
