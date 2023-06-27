@@ -18,6 +18,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { formatPriceInCents } from '@/lib/formatter'
 import Head from 'next/head'
+import { Header } from '@/components/Header'
 
 export interface IProduct {
   id: string
@@ -51,6 +52,8 @@ export default function Home(props: IHomeProps) {
       <Head>
         <title>Home | Ignite Shop</title>
       </Head>
+
+      <Header />
 
       <Container ref={ref} className="keen-slider">
         {props.products.map((product) => (

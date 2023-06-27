@@ -4,13 +4,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import logoImg from '../assets/logo.svg'
 
-export function Header() {
+interface IHeaderProps {
+  cartButtonHidden?: boolean
+}
+
+export function Header({ cartButtonHidden = false }: IHeaderProps) {
   return (
-    <StyledHeader>
+    <StyledHeader justifyContent={cartButtonHidden ? 'center' : 'spaceBetween'}>
       <Link href={'/'}>
         <Image src={logoImg} alt="" />
       </Link>
-      <CartButton type="button">
+      <CartButton type="button" display={cartButtonHidden ? 'none' : 'flex'}>
         <Handbag size={24} />
       </CartButton>
     </StyledHeader>

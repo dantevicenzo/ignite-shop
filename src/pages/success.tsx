@@ -12,6 +12,7 @@ import { GetServerSideProps } from 'next'
 import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
 import Head from 'next/head'
+import { Header } from '@/components/Header'
 
 interface ISuccessProps {
   customerName: string
@@ -35,6 +36,8 @@ export default function Success({
         <title>Compra efetuada | Ignite Shop</title>
         <meta name="robots" content="noindex" />
       </Head>
+
+      <Header cartButtonHidden />
 
       <Container>
         <ImageGroupContainer>

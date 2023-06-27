@@ -2,7 +2,12 @@ import { styled } from '..'
 
 export const StyledHeader = styled('header', {
   display: 'flex',
-  justifyContent: 'space-between',
+  variants: {
+    justifyContent: {
+      spaceBetween: { justifyContent: 'space-between' },
+      center: { justifyContent: 'center' },
+    },
+  },
 
   paddingTop: '2.5rem',
   paddingBottom: '2rem',
@@ -11,7 +16,12 @@ export const StyledHeader = styled('header', {
 })
 
 export const CartButton = styled('button', {
-  display: 'flex',
+  variants: {
+    display: {
+      flex: { display: 'flex' },
+      none: { display: 'none' },
+    },
+  },
   alignItems: 'center',
   justifyContent: 'center',
 

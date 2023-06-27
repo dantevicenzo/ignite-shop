@@ -20,6 +20,7 @@ import {
 } from '@/styles/pages/product'
 
 import { IProduct } from '..'
+import { Header } from '@/components/Header'
 
 interface IProductProps {
   product: IProduct
@@ -57,6 +58,8 @@ export default function Product({ product }: IProductProps) {
       <Head>
         <title>{`${product.name} | Ignite Shop`}</title>
       </Head>
+
+      <Header />
 
       <Container>
         <ImageContainer>
