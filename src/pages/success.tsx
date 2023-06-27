@@ -13,6 +13,7 @@ import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
 import Head from 'next/head'
 import { Header } from '@/components/Header'
+import { useRouter } from 'next/router'
 
 interface ISuccessProps {
   customerName: string
@@ -30,6 +31,12 @@ export default function Success({
   purchasedItems,
   totalPurchasedItemsQuantity,
 }: ISuccessProps) {
+  const { isFallback } = useRouter()
+
+  if (isFallback) {
+    return <p>Carregando...</p>
+  }
+
   return (
     <>
       <Head>
