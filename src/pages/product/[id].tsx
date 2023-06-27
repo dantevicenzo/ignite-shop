@@ -1,3 +1,14 @@
+import axios from 'axios'
+import { GetStaticPaths, GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
+import Image from 'next/image'
+import Head from 'next/head'
+import { useState } from 'react'
+import Stripe from 'stripe'
+
+import { stripe } from '@/lib/stripe'
+import { formatPriceInCents } from '@/lib/formatter'
+
 import {
   AddToBagButton,
   Container,
@@ -7,16 +18,8 @@ import {
   Price,
   Title,
 } from '@/styles/pages/product'
-import Image from 'next/image'
-import { GetStaticPaths, GetStaticProps } from 'next'
-import { stripe } from '@/lib/stripe'
-import Stripe from 'stripe'
+
 import { IProduct } from '..'
-import { formatPriceInCents } from '@/lib/formatter'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
-import axios from 'axios'
-import { useState } from 'react'
 
 interface IProductProps {
   product: IProduct
