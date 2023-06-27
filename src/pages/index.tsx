@@ -6,7 +6,7 @@ import {
   CartTitle,
   Container,
 } from '@/styles/pages/home'
-import { Handbag } from '@phosphor-icons/react'
+import { Handbag } from 'phosphor-react'
 import { useKeenSlider } from 'keen-slider/react'
 import 'keen-slider/keen-slider.min.css'
 

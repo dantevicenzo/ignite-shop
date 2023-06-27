@@ -1,5 +1,5 @@
 import { StyledHeader, CartButton, CartCount } from '@/styles/components/header'
-import { Handbag } from '@phosphor-icons/react'
+import { Handbag } from 'phosphor-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import logoImg from '../assets/logo.svg'

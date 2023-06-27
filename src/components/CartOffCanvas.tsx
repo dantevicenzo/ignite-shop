@@ -11,7 +11,7 @@ import {
 } from '@/styles/components/cartOffCanvas'
 import { useShoppingCart } from 'use-shopping-cart'
 import Image from 'next/image'
-import { X } from '@phosphor-icons/react'
+import { X } from 'phosphor-react'
 import React, { MutableRefObject, useEffect, useRef } from 'react'
 
 export function CartOffCanvas() {
