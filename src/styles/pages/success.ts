@@ -21,12 +21,13 @@ export const Container = styled('div', {
 })
 
 export const ImageGroupContainer = styled('div', {
-  display: 'flex',
+  position: 'relative',
+  height: '8.75rem',
   marginTop: '6.5rem',
-  gap: '0.5rem',
 })
 
 export const ImageContainer = styled('div', {
+  position: 'absolute',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -34,6 +35,7 @@ export const ImageContainer = styled('div', {
   height: '8.75rem',
   background: '$linearGradientGreenPurple',
   borderRadius: '50%',
+  boxShadow: '0px 0px 60px #000000',
 })
 
 export const Title = styled('h1', {

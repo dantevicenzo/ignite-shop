@@ -55,9 +55,18 @@ export default function Success({
       <Header cartButtonHidden />
 
       <Container>
-        <ImageGroupContainer>
+        <ImageGroupContainer
+          css={{
+            width: `${(140 + (purchasedItems.length - 1) * 88) / 16}rem`,
+          }}
+        >
           {purchasedItems.map((item) => (
-            <ImageContainer key={item.id}>
+            <ImageContainer
+              key={item.id}
+              css={{
+                left: `calc(${purchasedItems.indexOf(item) * 5.5}rem)`,
+              }}
+            >
               <Image src={item.imgUrl} width={130} height={132} alt="" />
             </ImageContainer>
           ))}

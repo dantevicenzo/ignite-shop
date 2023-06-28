@@ -4,15 +4,16 @@ export const StyledHeader = styled('header', {
   display: 'flex',
   variants: {
     justifyContent: {
-      spaceBetween: { justifyContent: 'space-between' },
+      spaceBetween: {
+        justifyContent: 'space-between',
+        maxWidth: 'calc(73rem + 2rem)',
+        width: '100%',
+      },
       center: { justifyContent: 'center' },
     },
   },
-
-  paddingTop: '2.5rem',
-  paddingBottom: '2rem',
+  padding: '2.5rem 1rem 2rem',
   margin: '0 auto',
-  minWidth: 1168,
 })
 
 export const CartButton = styled('button', {
