@@ -6,8 +6,6 @@ export const ArrowContainer = styled('div', {
   width: '8.5rem',
 
   svg: {
-    width: '30px',
-    height: '30px',
     position: 'absolute',
     top: '50%',
     transform: 'translateY(-50%)',
@@ -23,7 +21,7 @@ export const ArrowContainer = styled('div', {
           'linear-gradient(270deg, rgba(18,18,20,0) 0%, rgba(18,18,20,0.75) 100%)',
 
         svg: {
-          left: '5px',
+          left: '1rem',
         },
       },
       right: {
@@ -31,11 +29,11 @@ export const ArrowContainer = styled('div', {
           'linear-gradient(90deg, rgba(18,18,20,0) 0%, rgba(18,18,20,0.75) 100%)',
 
         left: 'auto',
-        right: '0px',
+        right: 0,
 
         svg: {
           left: 'auto',
-          right: '5px',
+          right: '1rem',
         },
       },
     },
