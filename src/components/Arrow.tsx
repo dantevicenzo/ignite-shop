@@ -8,11 +8,14 @@ export function Arrow(props: {
 }) {
   return (
     <ArrowContainer
-      onClick={props.onClick}
       position={`${props.left ? 'left' : 'right'}`}
       disabled={props.disabled}
     >
-      {props.left ? <CaretLeft size={48} /> : <CaretRight size={48} />}
+      {props.left ? (
+        <CaretLeft size={48} onClick={props.onClick} />
+      ) : (
+        <CaretRight size={48} onClick={props.onClick} />
+      )}
     </ArrowContainer>
   )
 }
