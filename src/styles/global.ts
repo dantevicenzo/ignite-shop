@@ -1,12 +1,37 @@
 import { globalCss } from '.'
 
 export const globalStyles = globalCss({
+  // Reset css
   '*': {
     margin: 0,
     padding: 0,
     boxSizing: 'border-box',
   },
 
+  // Resize root font-size based on window pixel ratio
+  html: {
+    fontSize: '$base',
+  },
+
+  '@mediumPixelRatio': {
+    html: {
+      fontSize: '$mediumPixelRatio',
+    },
+  },
+
+  '@highPixelRatio': {
+    html: {
+      fontSize: '$highPixelRatio',
+    },
+  },
+
+  '@extremelyHighPixelRatio': {
+    html: {
+      fontSize: '$extremelyHighPixelRatio',
+    },
+  },
+
+  // Theme
   body: {
     backgroundColor: '$gray1',
     color: '$gray4',

@@ -26,12 +26,25 @@ export const {
       transparentGray2: 'rgb(32, 32, 36, 0.9)',
     },
     fontSizes: {
+      // theme
       xsm: '0.875rem',
       root: '1rem',
       sm: '1.125rem',
       md: '1.25rem',
       lg: '1.5rem',
       xl: '2rem',
+
+      // root
+      base: '16px',
+      mediumPixelRatio: '12.8px',
+      highPixelRatio: '9.6px',
+      extremelyHighPixelRatio: '8.57px',
     },
+  },
+
+  media: {
+    mediumPixelRatio: '(-webkit-device-pixel-ratio: 1.25)',
+    highPixelRatio: '(-webkit-device-pixel-ratio: 1.5)',
+    extremelyHighPixelRatio: '(-webkit-device-pixel-ratio: 1.75)',
   },
 })
