@@ -12,6 +12,10 @@ export const ArrowContainer = styled('div', {
     '-webkit-transform': 'translateY(-50%)',
     fill: '#fff',
     cursor: 'pointer',
+
+    '&:hover': {
+      filter: 'brightness(1.15)',
+    },
   },
 
   variants: {
