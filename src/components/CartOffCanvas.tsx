@@ -63,7 +63,12 @@ export function CartOffCanvas() {
               />
             </ImageContainer>
             <DetailsContainer>
-              <span>{cartItem.name}</span>
+              <span>
+                {cartItem.name}{' '}
+                {cartItem.quantity > 1 && (
+                  <span>{`(x${cartItem.quantity})`}</span>
+                )}
+              </span>
               <strong>{cartItem.formattedValue}</strong>
               <button onClick={() => removeItem(cartItem.id)}>Remover</button>
             </DetailsContainer>

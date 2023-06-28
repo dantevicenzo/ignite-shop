@@ -37,6 +37,10 @@ export const DetailsContainer = styled('div', {
   span: {
     fontSize: '$sm',
     color: '$gray4',
+
+    span: {
+      fontSize: '$xsm',
+    },
   },
 
   strog: {
