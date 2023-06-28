@@ -22,6 +22,10 @@ export const CartButton = styled('button', {
       flex: { display: 'flex' },
       none: { display: 'none' },
     },
+    cartState: {
+      full: { color: '$gray4' },
+      empty: { color: '$gray3' },
+    },
   },
   alignItems: 'center',
   justifyContent: 'center',
@@ -32,13 +36,11 @@ export const CartButton = styled('button', {
   height: '3rem',
   backgroundColor: '$gray2',
 
-  color: '$gray3',
-
   position: 'relative',
 
   '&:hover': {
     cursor: 'pointer',
-    opacity: 0.8,
+    filter: 'brightness(1.15)',
   },
 })
 

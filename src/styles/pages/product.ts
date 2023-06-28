@@ -55,7 +55,7 @@ export const AddToBagButton = styled('button', {
   cursor: 'pointer',
 
   '&:enabled:hover': {
-    opacity: 0.8,
+    backgroundColor: '$greenLight',
   },
 
   '&:disabled': {

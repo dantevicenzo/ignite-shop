@@ -82,6 +82,6 @@ export const AddToCartButton = styled('button', {
 
   '&:hover': {
     cursor: 'pointer',
-    opacity: 0.8,
+    backgroundColor: '$greenLight',
   },
 })

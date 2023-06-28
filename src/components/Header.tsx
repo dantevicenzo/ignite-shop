@@ -19,6 +19,7 @@ export function Header({ cartButtonHidden = false }: IHeaderProps) {
       </Link>
       <CartButton
         type="button"
+        cartState={cartCount ? 'full' : 'empty'}
         display={cartButtonHidden ? 'none' : 'flex'}
         onClick={handleCartClick}
       >

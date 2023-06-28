@@ -53,6 +53,10 @@ export const DetailsContainer = styled('div', {
     background: 'transparent',
     alignSelf: 'self-start',
     cursor: 'pointer',
+
+    '&:hover': {
+      color: '$greenLight',
+    },
   },
 })
 
@@ -108,7 +112,7 @@ export const CheckoutButton = styled('button', {
   fontWeight: 'bold',
 
   '&:hover': {
-    opacity: 0.8,
+    backgroundColor: '$greenLight',
   },
 })
 
