@@ -115,8 +115,13 @@ export const CheckoutButton = styled('button', {
   fontSize: '$sm',
   fontWeight: 'bold',
 
-  '&:hover': {
+  '&:enabled:hover': {
     backgroundColor: '$greenLight',
+  },
+
+  '&:disabled': {
+    opacity: 0.6,
+    cursor: 'not-allowed',
   },
 })
 

@@ -12,9 +12,11 @@ import {
 import { useShoppingCart } from 'use-shopping-cart'
 import Image from 'next/image'
 import { X } from 'phosphor-react'
-import React, { MutableRefObject, useEffect, useRef } from 'react'
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 
 export function CartOffCanvas() {
+  const [isRedirectingToCheckout, setIsRedirectingToCheckout] = useState(false)
+
   const {
     shouldDisplayCart,
     cartDetails,
@@ -27,8 +29,13 @@ export function CartOffCanvas() {
 
   const cartOffCanvasRef = useRef() as MutableRefObject<HTMLInputElement>
 
+  const cartIsEmpty = cartCount! < 1
+
   function handleCheckout() {
-    redirectToCheckout()
+    if (!cartIsEmpty) {
+      setIsRedirectingToCheckout(true)
+      redirectToCheckout()
+    }
   }
 
   useEffect(() => {
@@ -85,7 +92,12 @@ export function CartOffCanvas() {
         <strong>Valor total</strong>
         <strong>{formattedTotalPrice}</strong>
       </TotalPriceContainer>
-      <CheckoutButton onClick={handleCheckout}>Finalizar compra</CheckoutButton>
+      <CheckoutButton
+        onClick={handleCheckout}
+        disabled={isRedirectingToCheckout || cartIsEmpty}
+      >
+        Finalizar compra
+      </CheckoutButton>
     </Container>
   )
 }
