@@ -20,6 +20,8 @@ import { formatPriceInCents } from '@/lib/formatter'
 import Head from 'next/head'
 import { Header } from '@/components/Header'
 import { useShoppingCart } from 'use-shopping-cart'
+import { Arrow } from '@/components/Arrow'
+import { useState } from 'react'
 
 export interface IProduct {
   id: string
@@ -37,8 +39,11 @@ interface IHomeProps {
 }
 
 export default function Home(props: IHomeProps) {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [loaded, setLoaded] = useState(false)
+
   const WheelControls = useWheelControls()
-  const [ref] = useKeenSlider<HTMLDivElement>(
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
     {
       loop: false,
       rubberband: false,
@@ -46,9 +51,16 @@ export default function Home(props: IHomeProps) {
         perView: 'auto',
         origin: 'center',
       },
+      slideChanged(slider) {
+        setCurrentSlide(slider.track.details.rel)
+      },
+      created() {
+        setLoaded(true)
+      },
     },
     [WheelControls],
   )
+
   const { addItem } = useShoppingCart()
 
   function handleAddToBag(product: IProduct) {
@@ -70,7 +82,7 @@ export default function Home(props: IHomeProps) {
 
       <Header />
 
-      <Container ref={ref} className="keen-slider">
+      <Container ref={sliderRef} className="keen-slider">
         {props.products.map((product) => (
           <Card className="keen-slider__slide" key={product.id}>
             <Link href={`/product/${product.id}`} passHref legacyBehavior>
@@ -91,6 +103,28 @@ export default function Home(props: IHomeProps) {
           </Card>
         ))}
       </Container>
+
+      {loaded && instanceRef.current && (
+        <>
+          <Arrow
+            left
+            onClick={(e: any) =>
+              e.stopPropagation() || instanceRef.current?.prev()
+            }
+            disabled={currentSlide === 0}
+          />
+
+          <Arrow
+            onClick={(e: any) =>
+              e.stopPropagation() || instanceRef.current?.next()
+            }
+            disabled={
+              currentSlide ===
+              instanceRef.current.track.details.slides.length - 1
+            }
+          />
+        </>
+      )}
     </>
   )
 }
