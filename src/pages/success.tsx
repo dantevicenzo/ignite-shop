@@ -17,14 +17,15 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useShoppingCart } from 'use-shopping-cart'
 
+interface IPurchasedItems {
+  id: string
+  description: string
+  quantity: number
+  imgUrl: string
+}
 interface ISuccessProps {
   customerName: string
-  purchasedItems: {
-    id: string
-    description: string
-    quantity: number
-    imgUrl: string
-  }[]
+  purchasedItems: IPurchasedItems[]
   totalPurchasedItemsQuantity: number
 }
 
@@ -45,6 +46,16 @@ export default function Success({
     return <p>Carregando...</p>
   }
 
+  const expandedPurchasedItems = purchasedItems.reduce(
+    (expandedItems, item) => {
+      for (let i = 0; i < item.quantity; i++) {
+        expandedItems.push({ ...item })
+      }
+      return expandedItems
+    },
+    [] as IPurchasedItems[],
+  )
+
   return (
     <>
       <Head>
@@ -57,14 +68,16 @@ export default function Success({
       <Container>
         <ImageGroupContainer
           css={{
-            width: `${(140 + (purchasedItems.length - 1) * 88) / 16}rem`,
+            width: `${
+              (140 + (expandedPurchasedItems.length - 1) * 88) / 16
+            }rem`,
           }}
         >
-          {purchasedItems.map((item) => (
+          {expandedPurchasedItems.map((item) => (
             <ImageContainer
-              key={item.id}
+              key={`${item.id}`} // Chave única para cada ImageContainer
               css={{
-                left: `calc(${purchasedItems.indexOf(item) * 5.5}rem)`,
+                left: `calc(${expandedPurchasedItems.indexOf(item) * 5.5}rem)`,
               }}
             >
               <Image src={item.imgUrl} width={130} height={132} alt="" />
@@ -108,7 +121,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
       description: item.description,
       quantity: item.quantity,
       imgUrl: productDetails.images[0],
-    }
+    } as IPurchasedItems
   })
 
   const totalPurchasedItemsQuantity = purchasedItems?.reduce((acc, item) => {
