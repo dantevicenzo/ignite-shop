@@ -7,6 +7,8 @@ export const Container = styled('main', {
   height: '100%',
   maxHeight: '44rem',
   paddingBottom: '3rem',
+
+  position: 'relative',
 })
 
 export const Card = styled('div', {
