@@ -4,9 +4,12 @@ export const Container = styled('main', {
   display: 'flex',
   gap: '3rem',
   width: '100vw',
+  height: '100%',
+  maxHeight: '44rem',
+  paddingBottom: '3rem',
 })
 
-export const Card = styled('a', {
+export const Card = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -15,8 +18,7 @@ export const Card = styled('a', {
   width: '43.5rem',
   minWidth: '43.5rem',
   maxWidth: '43.5rem',
-  height: '41rem',
-  minHeight: '41rem',
+  height: '100%',
   maxHeight: '41rem',
   borderRadius: 8,
 
@@ -24,6 +26,10 @@ export const Card = styled('a', {
 
   overflow: 'hidden',
   cursor: 'pointer',
+
+  img: {
+    objectFit: 'cover',
+  },
 
   '&:hover': {
     footer: {
